@@ -1,0 +1,188 @@
+---
+title: "DA R PROGRAMMING EXAM"
+author: "Perpetua odili"
+date: "22/7/2024"
+output: html_document
+---
+
+ ## IMPORT THE DATASET CALLED employees_attrition.csv file 
+ ## INTO RSTUDIO
+ 
+ ## EMPLOYEE ATTRITION MEANS EMPLOYEES ARE LEAVING THE COMPANY
+ ## FOR ONE REASON OR THE OTHER.
+ 
+ ## THE ATTRITION COLUMN HAS TWO POSSIBLE VALUES YES - FOR EMPLOYEES
+ ## THAT LEFT THE COMPANY AND NO FOR THOSE THAT ARE  STILL AROUND.
+ 
+ ## NOTE
+ 
+ ## 1. RUN EVERY CODE CHUNCK YOU CREATE SO THAT THE OUTPUT WILL
+ ## BE DISPLAYED BELOW THE CODE CHUNK.
+ 
+ ## 2. SAVE YOUR RMARKDOWN FILE WITH YOUR NAME FOR IDENTIFICATION
+ 
+ ## 3. USE DPLYR FUNCTIONS TO ANSWER THE FOLLOWING QUESTIONS.
+ 
+ 
+ 
+```{r Q1}
+
+# load the tidyverse package into this session
+
+library("tidyverse")
+```
+ 
+```{r  Q2}
+## import the given employees_attrition.csv file 
+employees_attrition <-read.csv(file.choose())
+
+```
+```{r}
+View(employees_attrition)
+```
+
+```{r Q3 }
+
+## SHOW THE STRUCTURE OF THE DATAFRAME
+
+str(employees_attrition)
+
+```
+
+
+```{r Q4 }
+
+## HOW MANY ROWS AND COLUMNS ARE THERE IN THE DATAFRAME
+
+num_rows <-nrow(employees_attrition)
+print(num_rows)
+
+num_cols <-ncol(employees_attrition)
+print(num_cols)
+
+```
+
+```{r Q5}
+## SHOW THE NUMBER OF EMPLOYEES THAT LEFT THE COMPANY AND THE 
+## NUMBER THAT ARE STILL WITH THE COMPANY
+## HINT - USE THE group_by() function to categorise.
+# Load the necessary library
+library(dplyr)
+
+
+employees_attrition %>%
+  group_by(attrition) %>%
+  summarise(count = n())
+
+
+```
+
+
+
+```{r}
+library(tidyverse)
+```
+```{r}
+library(dplyr)
+```
+
+
+
+```{r}
+```
+
+
+
+
+
+```{r Q6}
+## SHOW THE NUMBER OF EMPLOYEES THAT LEFT THE COMPANY IN EACH 
+## DEPARTMENT.
+employees_attrition %>%
+  filter(attrition == "Yes")%>%
+  group_by(attrition,department) %>%
+  summarise(count = n())
+
+```
+
+
+
+```{r Q7}
+## SHOW THE NUMBER OF MALE AND FEMALE EMPLOYEES THAT LEFT THE COMPANY
+## AND THE NUMBER OF MALE AND FEMALE EMPLOYEES THAT ARE STILL WITH THE COMPANY
+## HINT - USE THE group_by() function
+
+
+library(dplyr)
+
+employees_attrition %>%
+  filter(attrition %in% c("Yes", "No")) %>%
+  group_by(attrition, gender) %>%
+  summarise(count = n(), .groups = 'drop')
+
+
+```
+
+
+
+
+```{r Q8}
+
+## WHAT IS THE AVERAGE NUMBER OF YEARS WORKED IN THE COMPANY BY THOSE THAT LEFT THE COMPANY.
+employees_attrition %>%
+  filter(attrition == "Yes")%>%
+  group_by(attrition) %>%
+  summarise(year_sworked = mean(employees_attrition$YearsAtCompany))
+
+```
+
+
+
+```{r Q9}
+
+```
+
+
+
+
+```{r Q10}
+## SHOW THE NUMBER OF EMPLOYEES THAT LEFT THE COMPANY BASED ON  THE isMarried column. 
+
+employees_attrition %>%
+  filter(attrition == "Yes")%>%
+  group_by(isMarried) %>%
+  summarise(count =n())
+
+
+```
+
+
+
+```{r Q11 }
+## SHOW THE AVERAGE MONTHLY INCOME EARNED BY THOSE WHO LEFT 
+## THE COMPANY. BREAK THE INFORMATION DOWN BY DEPARTMENTS
+library(dplyr)
+
+
+employees_attrition %>%
+  filter(attrition == "Yes") %>%
+  group_by(department) %>%
+  summarise(avg_income = mean(monthly_income, na.rm = TRUE))
+
+
+
+```
+
+
+```{r Q12}
+
+## SHOW THE AVERAGE MONTHLY INCOME EARNED BY THOSE WHO ARE STILL WITH THE COMPANY. BREAK THE INFORMATION DOWN BY DEPARTMENTS.
+employees_attrition %>%
+  filter(attrition == "No") %>%
+  group_by(department) %>%
+  summarise(avg_income = mean(monthly_income, na.rm = TRUE))
+
+```
+
+
+
